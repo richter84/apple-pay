@@ -29,12 +29,11 @@
 }
 
 .apple-pay-button {
-  display: absolute;
+  display: inline-block;
   top: 0;
-  background-color: red !important;
   width: 150px !important;
   -webkit-appearance: -apple-pay-button;
-  -apple-pay-button-type: donate; /* Use any supported button type. */
+  -apple-pay-button-type: buy; /* Use any supported button type. */
   -apple-pay-button-height: 30px ;
   -apple-pay-button-border-radius: 3px ;
   -apple-pay-button-padding: 0px 0px ;
