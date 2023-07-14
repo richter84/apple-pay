@@ -52,7 +52,7 @@ function App() {
       });
 
       const handleClick = () => {
-        var paymentRequest = applePayInstance.createPaymentRequest({
+        var paymentRequest = applePay.createPaymentRequest({
           currencyCode: 'GBP',
           total: {
             label: 'merchant.uk.co.postcodelottery.rs-dv',
@@ -63,7 +63,7 @@ function App() {
         var session = new window.ApplePaySession(3, paymentRequest);
         
         session.onvalidatemerchant = function (event) {
-          applePayInstance.performValidation({
+          applePay.performValidation({
             merchantIdentifier: 'merchant.uk.co.postcodelottery.rs-dv',
             validationURL: event.validationURL,
             displayName: 'merchant.uk.co.postcodelottery.rs-dv'
@@ -80,7 +80,7 @@ function App() {
 
         session.onpaymentauthorized = function (event) {
           //console.log('shipping address:', event.payment.shippingContact);
-          applePayInstance.tokenize({
+          applePay.tokenize({
             token: event.payment.token
           }).then(function (payload) {
             //alert("payload nonce");
