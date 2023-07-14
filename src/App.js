@@ -15,9 +15,11 @@ function App() {
   if (window.ApplePaySession.canMakePayments()) {
       console.error('This device is not capable of making Apple Pay payments');
     }*/
+
+  var applePay = require('braintree-web/apple-pay');
    
 
-  const handleClick = () => {
+
 
       braintree.client
       .create({
@@ -29,6 +31,8 @@ function App() {
         });
       })
       .then(function (applePayInstance) {
+
+        applePay = applePayInstance;
         // Set up your Apple Pay button here        
    
         /*var request = {
@@ -39,6 +43,15 @@ function App() {
           total: { label: 'Your Merchant Name', amount: '10.00' },
         }*/
 
+        
+
+      })
+      .catch(function (err) {
+        // Handle error
+        console.log(err);
+      });
+
+      const handleClick = () => {
         var paymentRequest = applePayInstance.createPaymentRequest({
           currencyCode: 'GBP',
           total: {
@@ -91,13 +104,7 @@ function App() {
         };
 
         session.begin();
-
-      })
-      .catch(function (err) {
-        // Handle error
-        console.log(err);
-      });
-  }
+      }
     
   return (
     <div className="App">
