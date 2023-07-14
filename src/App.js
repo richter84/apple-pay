@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, {useState} from "react";
-import braintree from 'braintree-web'
+import braintree, { applePay } from 'braintree-web'
 
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
       console.error('This device is not capable of making Apple Pay payments');
     }*/
 
-  const applePay = braintree.client
+  braintree.client
       .create({
         authorization: "sandbox_4xzk58m9_475xb2xjmrfd45cc",
       })
@@ -26,8 +26,7 @@ function App() {
         });
       })
       .then((applePayInstance) => {
-        console.log("test what the instance is", applePayInstance)
-        return applePayInstance;
+        applePay = applePayInstance;
         // Set up your Apple Pay button here        
    
         /*var request = {
