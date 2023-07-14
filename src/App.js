@@ -110,7 +110,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <button className='apple-pay-button' onClick={handleClick}>push me</button>
+        <button className='apple-pay-button' onClick={handleClick}></button>
         {message}
       </header>
     </div>
