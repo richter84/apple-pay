@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, {useState} from "react";
-import braintree, { applePay } from 'braintree-web'
+import braintree from 'braintree-web'
 
 function App() {
 
@@ -15,6 +15,8 @@ function App() {
   if (window.ApplePaySession.canMakePayments()) {
       console.error('This device is not capable of making Apple Pay payments');
     }*/
+
+  const applePay = require('braintree-web/apple-pay');
 
   braintree.client
       .create({
