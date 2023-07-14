@@ -19,10 +19,6 @@ function App() {
 
   const handleClick = () => {
 
-      if (window.ApplePaySession.canMakePayments()) {
-        console.log('This device is capable of making Apple Pay payments');
-      }
-
       braintree.client
       .create({
         authorization: "sandbox_4xzk58m9_475xb2xjmrfd45cc",
