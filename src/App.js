@@ -16,23 +16,18 @@ function App() {
       console.error('This device is not capable of making Apple Pay payments');
     }*/
 
-  var applePay = require('braintree-web/apple-pay');
-   
-
-
-
-      braintree.client
+  const applePay = braintree.client
       .create({
         authorization: "sandbox_4xzk58m9_475xb2xjmrfd45cc",
       })
-      .then(function (clientInstance) {
+      .then((clientInstance) => {
         return braintree.applePay.create({
           client: clientInstance,
         });
       })
-      .then(function (applePayInstance) {
-
-        applePay = applePayInstance;
+      .then((applePayInstance) => {
+        console.log("test what the instance is", applePayInstance)
+        return applePayInstance;
         // Set up your Apple Pay button here        
    
         /*var request = {
@@ -46,13 +41,13 @@ function App() {
         
 
       })
-      .catch(function (err) {
+      .catch((err) => {
         // Handle error
         console.log(err);
       });
 
       const handleClick = () => {
-        var paymentRequest = applePay.createPaymentRequest({
+        const paymentRequest = applePay.createPaymentRequest({
           currencyCode: 'GBP',
           total: {
             label: 'merchant.uk.co.postcodelottery.rs-dv',
@@ -60,17 +55,17 @@ function App() {
           }
         })
         
-        var session = new window.ApplePaySession(3, paymentRequest);
+        const session = new window.ApplePaySession(3, paymentRequest);
         
-        session.onvalidatemerchant = function (event) {
+        session.onvalidatemerchant = (event) => {
           applePay.performValidation({
             merchantIdentifier: 'merchant.uk.co.postcodelottery.rs-dv',
             validationURL: event.validationURL,
             displayName: 'merchant.uk.co.postcodelottery.rs-dv'
-          }).then(function (merchantSession) {
+          }).then((merchantSession) => {
             session.completeMerchantValidation(merchantSession);
             //alert("completeMerchantValidation");
-          }).catch(function (validationErr) {
+          }).catch((validationErr) => {
             // You should show an error to the user, e.g. 'Apple Pay failed to load.'
             console.error(validationErr);
             alert(validationErr)
@@ -78,11 +73,11 @@ function App() {
           });
         };
 
-        session.onpaymentauthorized = function (event) {
+        session.onpaymentauthorized = (event) => {
           //console.log('shipping address:', event.payment.shippingContact);
           applePay.tokenize({
             token: event.payment.token
-          }).then(function (payload) {
+          }).then( (payload) => {
             //alert("payload nonce");
             // Send payload.nonce to your server
             console.log('nonce:', payload.nonce);
@@ -95,7 +90,7 @@ function App() {
             // call 'completePayment' to dismiss the Apple Pay sheet.
             session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
             setMessage('transaction complete! '+ window.ApplePaySession.STATUS_SUCCESS);
-          }).catch(function (tokenizeErr) {
+          }).catch((tokenizeErr) => {
             console.error(tokenizeErr);
             alert(tokenizeErr);
             setMessage("transaction failure!");
