@@ -44,23 +44,23 @@ function App() {
         }*/
 
         var paymentRequest = applePayInstance.createPaymentRequest({
+          currencyCode: 'GBP',
           total: {
-            label: 'My Store',
+            label: 'merchant.uk.co.postcodelottery.rs-dv',
             amount: '0.10'
           }
         })
         
         var session = new window.ApplePaySession(3, paymentRequest);
-        alert("start onvalidatemerchant");
         
         session.onvalidatemerchant = function (event) {
-          alert("doing onvalidatemerchant");
           applePayInstance.performValidation({
+            merchantIdentifier: 'merchant.uk.co.postcodelottery.rs-dv',
             validationURL: event.validationURL,
-            displayName: 'My Store'
+            displayName: 'merchant.uk.co.postcodelottery.rs-dv'
           }).then(function (merchantSession) {
             session.completeMerchantValidation(merchantSession);
-            alert("complete");
+            //alert("completeMerchantValidation");
           }).catch(function (validationErr) {
             // You should show an error to the user, e.g. 'Apple Pay failed to load.'
             console.error(validationErr);
@@ -69,10 +69,33 @@ function App() {
           });
         };
 
+        session.onpaymentauthorized = function (event) {
+          //console.log('shipping address:', event.payment.shippingContact);
+          applePayInstance.tokenize({
+            token: event.payment.token
+          }).then(function (payload) {
+            //alert("payload nonce");
+            // Send payload.nonce to your server
+            console.log('nonce:', payload.nonce);
+
+            // If requested, address information is accessible in event.payment
+            // and may also be sent to your server.
+            //alert('billingPostalCode:', event.payment.billingContact.postalCode);
+
+            // After you have transacted with the payload.nonce,
+            // call 'completePayment' to dismiss the Apple Pay sheet.
+            session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
+            setMessage('transaction complete! '+ window.ApplePaySession.STATUS_SUCCESS);
+          }).catch(function (tokenizeErr) {
+            console.error(tokenizeErr);
+            alert(tokenizeErr);
+            setMessage("transaction failure!");
+            session.completePayment(window.ApplePaySession.STATUS_FAILURE);
+          });
+        };
+
         session.begin();
 
-        //alert("success");
-        setMessage("success!");
       })
       .catch(function (err) {
         // Handle error
@@ -84,20 +107,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
         <button onClick={handleClick}>push me</button>
         {message}
-        testing commit
       </header>
     </div>
   );
