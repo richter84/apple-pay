@@ -57,7 +57,7 @@ const App = () => {
     const session = new window.ApplePaySession(3, paymentRequest);
     
     session.onvalidatemerchant = (event) => {
-      alert("before validation", event.validationURL)
+      alert(event.validationURL)
       applePay.performValidation({
         merchantIdentifier: 'merchant.uk.co.postcodelottery.rs-dv',
         validationURL: event.validationURL,
