@@ -67,7 +67,7 @@ const App = () => {
       }).catch((validationErr) => {
         // You should show an error to the user, e.g. 'Apple Pay failed to load.'
         console.error(validationErr);
-        alert(validationErr)
+        alert('validation Error', validationErr)
         session.abort();
       });
     };
