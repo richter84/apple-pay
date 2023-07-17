@@ -23,7 +23,8 @@ const App = () => {
       }).then((clientInstance) => braintree.applePay.create({
       client: clientInstance,
     })).then((applePayInstance) => {
-      setApplePay(applePayInstance)
+      applePay = applePayInstance
+      // setApplePay(applePayInstance)
     }).catch(err => {
       console.log(err);
     })
