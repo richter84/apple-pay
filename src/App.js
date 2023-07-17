@@ -5,7 +5,8 @@ import braintree from 'braintree-web'
 
 const App = () => {
   const [message, setMessage] = useState('test');
-  const [applePay, setApplePay] = useState(null);
+  // const [applePay, setApplePay] = useState(null);
+  let applePay = require('braintree-web/apple-pay');
 
   /*if(!window.ApplePaySession)
   {
@@ -16,33 +17,16 @@ const App = () => {
       console.error('This device is not capable of making Apple Pay payments');
     }*/
 
-  const handleSetupClient = async () => {
-    try {
-      const clientInstance = await braintree.client
-        .create({
-          authorization: "sandbox_4xzk58m9_475xb2xjmrfd45cc",
-        })
-      const applePayInstance = await braintree.applePay.create({
-        client: clientInstance,
-      });
+    braintree.client
+      .create({
+        authorization: "sandbox_4xzk58m9_475xb2xjmrfd45cc",
+      }).then((clientInstance) => braintree.applePay.create({
+      client: clientInstance,
+    })).then((applePayInstance) => {
       setApplePay(applePayInstance)
-    } catch (err) {
+    }).catch(err => {
       console.log(err);
-    }
-        // Set up your Apple Pay button here        
-   
-        /*var request = {
-          countryCode: 'US',
-          currencyCode: 'USD',
-          supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
-          merchantCapabilities: ['supports3DS'],
-          total: { label: 'Your Merchant Name', amount: '10.00' },
-        }*/
-  }
-
-  useEffect(() => {
-    handleSetupClient()
-  }, [])
+    })
 
   const handleClick = () => {
     console.log("applePay in onClick", applePay)
@@ -57,7 +41,6 @@ const App = () => {
     const session = new window.ApplePaySession(3, paymentRequest);
     
     session.onvalidatemerchant = (event) => {
-      alert(event.validationURL)
       applePay.performValidation({
         merchantIdentifier: 'merchant.uk.co.postcodelottery.rs-dv',
         validationURL: event.validationURL,
