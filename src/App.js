@@ -62,7 +62,9 @@ const App = () => {
         validationURL: event.validationURL,
         displayName: 'merchant.uk.co.postcodelottery.rs-dv'
       }).then((merchantSession) => {
+        alert("before merchant validation")
         session.completeMerchantValidation(merchantSession);
+        alert("after merchant validation")
         //alert("completeMerchantValidation");
       }).catch((validationErr) => {
         // You should show an error to the user, e.g. 'Apple Pay failed to load.'
