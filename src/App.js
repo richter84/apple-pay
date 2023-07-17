@@ -57,19 +57,17 @@ const App = () => {
     const session = new window.ApplePaySession(3, paymentRequest);
     
     session.onvalidatemerchant = (event) => {
+      alert("before validation", event.validationURL)
       applePay.performValidation({
         merchantIdentifier: 'merchant.uk.co.postcodelottery.rs-dv',
         validationURL: event.validationURL,
         displayName: 'merchant.uk.co.postcodelottery.rs-dv'
       }).then((merchantSession) => {
-        alert("before merchant validation")
         session.completeMerchantValidation(merchantSession);
-        alert("after merchant validation")
         //alert("completeMerchantValidation");
       }).catch((validationErr) => {
         // You should show an error to the user, e.g. 'Apple Pay failed to load.'
         console.error(validationErr);
-        alert('validation Error', validationErr)
         session.abort();
       });
     };
