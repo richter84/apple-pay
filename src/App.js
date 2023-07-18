@@ -50,7 +50,7 @@ const App = () => {
       currencyCode: 'GBP',
       total: {
         label: 'merchant.uk.co.postcodelottery.rs-dv',
-        amount: '0.10'
+        amount: '2000.00'
       }
     })
     
