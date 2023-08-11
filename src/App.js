@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import braintree from 'braintree-web'
+import braintree from 'braintree-web';
 
 const App = () => {
   const [message, setMessage] = useState('test');
@@ -18,98 +18,105 @@ const App = () => {
 
   const handleSetupClient = async () => {
     try {
-      const clientInstance = await braintree.client
-        .create({
-          authorization: "sandbox_4xzk58m9_475xb2xjmrfd45cc",
-        })
+      const clientInstance = await braintree.client.create({
+        authorization: 'sandbox_gp9kp6y5_9rbqdc36wh9ghr4v',
+      });
       const applePayInstance = await braintree.applePay.create({
         client: clientInstance,
       });
-      setApplePay(applePayInstance)
+      setApplePay(applePayInstance);
     } catch (err) {
       console.log(err);
     }
-        // Set up your Apple Pay button here        
-   
-        /*var request = {
+    // Set up your Apple Pay button here
+
+    /*var request = {
           countryCode: 'US',
           currencyCode: 'USD',
           supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
           merchantCapabilities: ['supports3DS'],
           total: { label: 'Your Merchant Name', amount: '10.00' },
         }*/
-  }
+  };
 
   useEffect(() => {
-    handleSetupClient()
-  }, [])
+    handleSetupClient();
+  }, []);
 
   const handleClick = () => {
-    console.log("applePay in onClick", applePay)
+    console.log('applePay in onClick', applePay);
     const paymentRequest = applePay.createPaymentRequest({
       currencyCode: 'GBP',
       total: {
-        label: 'merchant.uk.co.postcodelottery.rs-dv',
-        amount: '2000.00'
-      }
-    })
-    
+        label: 'ppl',
+        amount: '2000.00',
+      },
+    });
+
     const session = new window.ApplePaySession(3, paymentRequest);
-    
+
     session.onvalidatemerchant = (event) => {
-      applePay.performValidation({
-        merchantIdentifier: 'merchant.uk.co.postcodelottery.rs-dv',
-        validationURL: event.validationURL,
-        displayName: 'merchant.uk.co.postcodelottery.rs-dv'
-      }).then((merchantSession) => {
-        session.completeMerchantValidation(merchantSession);
-        //alert("completeMerchantValidation");
-      }).catch((validationErr) => {
-        // You should show an error to the user, e.g. 'Apple Pay failed to load.'
-        console.error(validationErr);
-        alert(validationErr)
-        session.abort();
-      });
+      applePay
+        .performValidation({
+          merchantIdentifier: 'ppl',
+          validationURL: event.validationURL,
+          displayName: 'ppl',
+        })
+        .then((merchantSession) => {
+          session.completeMerchantValidation(merchantSession);
+          //alert("completeMerchantValidation");
+        })
+        .catch((validationErr) => {
+          // You should show an error to the user, e.g. 'Apple Pay failed to load.'
+          console.error(validationErr);
+          alert(validationErr);
+          session.abort();
+        });
     };
 
     session.onpaymentauthorized = (event) => {
       //console.log('shipping address:', event.payment.shippingContact);
-      applePay.tokenize({
-        token: event.payment.token
-      }).then( (payload) => {
-        //alert("payload nonce");
-        // Send payload.nonce to your server
-        console.log('nonce:', payload.nonce);
+      applePay
+        .tokenize({
+          token: event.payment.token,
+        })
+        .then((payload) => {
+          //alert("payload nonce");
+          // Send payload.nonce to your server
+          console.log('payload:', payload);
+          console.log('event:', event);
 
-        // If requested, address information is accessible in event.payment
-        // and may also be sent to your server.
-        //alert('billingPostalCode:', event.payment.billingContact.postalCode);
+          // If requested, address information is accessible in event.payment
+          // and may also be sent to your server.
+          //alert('billingPostalCode:', event.payment.billingContact.postalCode);
 
-        // After you have transacted with the payload.nonce,
-        // call 'completePayment' to dismiss the Apple Pay sheet.
-        session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
-        setMessage('transaction complete! '+ window.ApplePaySession.STATUS_SUCCESS);
-      }).catch((tokenizeErr) => {
-        console.error(tokenizeErr);
-        alert(tokenizeErr);
-        setMessage("transaction failure!");
-        session.completePayment(window.ApplePaySession.STATUS_FAILURE);
-      });
+          // After you have transacted with the payload.nonce,
+          // call 'completePayment' to dismiss the Apple Pay sheet.
+          session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
+          setMessage(
+            'transaction complete! ' + window.ApplePaySession.STATUS_SUCCESS
+          );
+        })
+        .catch((tokenizeErr) => {
+          console.error(tokenizeErr);
+          alert(tokenizeErr);
+          setMessage('transaction failure!');
+          session.completePayment(window.ApplePaySession.STATUS_FAILURE);
+        });
     };
 
     session.begin();
-  }
-    
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <button className='apple-pay-button' onClick={handleClick}></button>
+        <button className="apple-pay-button" onClick={handleClick}></button>
         {message}
       </header>
     </div>
   );
-}
+};
 
 export default App;
-
