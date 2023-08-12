@@ -43,6 +43,19 @@ const App = () => {
     handleSetupClient();
   }, []);
 
+  const sendToServer = async (paymentNonce) => {
+    const response = await fetch('https://evuf6f5uo1.execute-api.eu-west-1.amazonaws.com/dev/apple', {
+      method: 'POST',
+      body: JSON.stringify(paymentNonce),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const result = await response.json();
+    console.log(result);
+    setMessage('sendToServer : ' + result);
+  };
+
   const handleClick = () => {
     console.log('applePay in onClick', applePay);
     const paymentRequest = applePay.createPaymentRequest({
@@ -52,19 +65,6 @@ const App = () => {
         amount: '0.01',
       },
     });
-
-    const sendToServer = async (paymentNonce) => {
-      const response = await fetch('https://evuf6f5uo1.execute-api.eu-west-1.amazonaws.com/dev/apple', {
-        method: 'POST',
-        body: JSON.stringify(paymentNonce),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const result = await response.json();
-      console.log(result);
-      setMessage('sendToServer : ' + result);
-    }
 
     const session = new window.ApplePaySession(3, paymentRequest);
 
