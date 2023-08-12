@@ -101,7 +101,7 @@ const App = () => {
           console.log('payload:', payload);
           console.log('event:', event);
 
-          setMessage("nonce : " + JSON.stringify(payload));
+          setMessage("nonce : " + payload.nonce);
 
 
 
