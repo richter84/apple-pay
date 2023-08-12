@@ -100,7 +100,8 @@ const App = () => {
           console.log('payload:', payload);
           console.log('event:', event);
 
-          setMessage(payload.paymentNonce);
+          setMessage("nonce : " + payload.paymentNonce);
+          alert("nonce : " + event.paymentNonce);
 
 
 
