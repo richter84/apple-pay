@@ -49,7 +49,7 @@ const App = () => {
       currencyCode: 'GBP',
       total: {
         label: 'ppl',
-        amount: '2000.00',
+        amount: '0.01',
       },
     });
 
