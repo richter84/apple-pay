@@ -54,7 +54,7 @@ const App = () => {
     });
     const result = await response.json();
     console.log(result);
-    setMessage('sendToServer : ' + JSON.stringify(result));/*
+    setMessage('sendToServer : ' + JSON.stringify(result));*/
   };
 
   const handleClick = () => {
