@@ -44,8 +44,8 @@ const App = () => {
   }, []);
 
   const sendToServer = async (paymentNonce) => {
-    
-    const response = await fetch('https://evuf6f5uo1.execute-api.eu-west-1.amazonaws.com/dev/apple', {
+    setMessage('sendToServer : ' + JSON.stringify(paymentNonce));
+    /*const response = await fetch('https://evuf6f5uo1.execute-api.eu-west-1.amazonaws.com/dev/apple', {
       method: 'POST',
       body: JSON.stringify(paymentNonce),
       headers: {
@@ -54,7 +54,7 @@ const App = () => {
     });
     const result = await response.json();
     console.log(result);
-    setMessage('sendToServer : ' + JSON.stringify(result));
+    setMessage('sendToServer : ' + JSON.stringify(result));/*
   };
 
   const handleClick = () => {
