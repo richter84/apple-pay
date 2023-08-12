@@ -129,7 +129,7 @@ const App = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <button className="apple-pay-button" onClick={handleClick}></button>
-        <div style="width:200px;">{message}</div>
+        <div style={{width:300 + 'px'}}>{message}</div>
       </header>
     </div>
   );
