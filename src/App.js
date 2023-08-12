@@ -44,8 +44,8 @@ const App = () => {
   }, []);
 
   const sendToServer = async (paymentNonce) => {
-    setMessage('sendToServer : ' + JSON.stringify(paymentNonce));
-    /*const response = await fetch('https://evuf6f5uo1.execute-api.eu-west-1.amazonaws.com/dev/apple', {
+    
+    const response = await fetch('https://evuf6f5uo1.execute-api.eu-west-1.amazonaws.com/dev/apple', {
       method: 'POST',
       body: JSON.stringify(paymentNonce),
       headers: {
@@ -54,7 +54,7 @@ const App = () => {
     });
     const result = await response.json();
     console.log(result);
-    setMessage('sendToServer : ' + JSON.stringify(result));*/
+    setMessage('sendToServer : ' + JSON.stringify(result));
   };
 
   const handleClick = () => {
@@ -78,7 +78,6 @@ const App = () => {
         })
         .then((merchantSession) => {
           session.completeMerchantValidation(merchantSession);
-          setMessage("validated");
           //alert("completeMerchantValidation");
         })
         .catch((validationErr) => {
@@ -101,9 +100,7 @@ const App = () => {
           console.log('payload:', payload);
           console.log('event:', event);
 
-          setMessage("nonce : " + payload.nonce);
-
-
+          sendToServer(payload.nonce);
 
           // If requested, address information is accessible in event.payment
           // and may also be sent to your server.
@@ -129,7 +126,7 @@ const App = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <button className="apple-pay-button" onClick={handleClick}></button>
-        <div style={{width:300 + 'px'}}>{message}</div>
+        {message}
       </header>
     </div>
   );
