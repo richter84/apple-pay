@@ -78,6 +78,7 @@ const App = () => {
         })
         .then((merchantSession) => {
           session.completeMerchantValidation(merchantSession);
+          setMessage("validated");
           //alert("completeMerchantValidation");
         })
         .catch((validationErr) => {
@@ -100,8 +101,7 @@ const App = () => {
           console.log('payload:', payload);
           console.log('event:', event);
 
-          setMessage("nonce : " + payload.paymentNonce);
-          alert("nonce : " + event.paymentNonce);
+          setMessage("nonce : " + JSON.stringify(payload));
 
 
 
