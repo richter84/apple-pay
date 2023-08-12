@@ -71,7 +71,7 @@ const App = () => {
     session.onvalidatemerchant = (event) => {
       applePay
         .performValidation({
-          merchantIdentifier: 'ppl',
+          merchantIdentifier: 'merchant.uk.co.postcodelottery.rs-dv',
           validationURL: event.validationURL,
           displayName: 'ppl',
         })
