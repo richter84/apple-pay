@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import braintree from 'braintree-web';
+import braintreeServer from 'braintree';
 
 const App = () => {
   const [message, setMessage] = useState('test');
@@ -86,6 +87,36 @@ const App = () => {
           console.log('payload:', payload);
           console.log('event:', event);
 
+
+          var gateway = new braintreeServer.BraintreeGateway({
+            environment: braintree.Environment.Sandbox,
+            merchantId: "9rbqdc36wh9ghr4v",
+            publicKey: "vchdm396cfmypq7t",
+            privateKey: "bf5c3651908ff8b1930b68d8ae314524",
+          });
+
+
+          gateway.transaction.sale({
+            amount: "0.10",
+            paymentMethodNonce: payload.paymentMethodNonce,
+            options: {
+              submitForSettlement: true
+            },
+            billing: {
+              postalCode: "KW172RY"
+            }
+          }).then(result => {
+            if (result.success) {
+              setMessage(
+                "Transaction ID: " + result.transaction.id
+              );
+              console.log("Transaction ID: " + result.transaction.id);
+            } else {+
+              setMessage('transaction failure: ' + result.message);
+            }
+           });
+
+
           // If requested, address information is accessible in event.payment
           // and may also be sent to your server.
           //alert('billingPostalCode:', event.payment.billingContact.postalCode);
@@ -93,9 +124,6 @@ const App = () => {
           // After you have transacted with the payload.nonce,
           // call 'completePayment' to dismiss the Apple Pay sheet.
           session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
-          setMessage(
-            'transaction complete! ' + window.ApplePaySession.STATUS_SUCCESS
-          );
         })
         .catch((tokenizeErr) => {
           console.error(tokenizeErr);
