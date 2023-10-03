@@ -63,9 +63,9 @@ const App = () => {
       currencyCode: 'GBP',
       total: {
         label: 'ppl',
-        amount: '0.01',
+        amount: '0.02',
       },
-      requiredBillingContactFields: ["name"]
+      requiredBillingContactFields: ['postalAddress', 'phone', 'email', 'name']
     });
 
     const session = new window.ApplePaySession(3, paymentRequest);
