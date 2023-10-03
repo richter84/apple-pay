@@ -65,6 +65,7 @@ const App = () => {
         label: 'ppl',
         amount: '0.01',
       },
+      requiredBillingContactFields: ["name"]
     });
 
     const session = new window.ApplePaySession(3, paymentRequest);
