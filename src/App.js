@@ -100,7 +100,7 @@ const App = () => {
           // Send payload.nonce to your server
           console.log('payload:', payload);
           console.log('event:', event);
-          alert(paymentRequest.cardholderName);
+          alert(paymentRequest.requiredBillingContactFields.cardholderName);
 
           //sendToServer(payload.nonce, paymentRequest.cardholderName);
 
