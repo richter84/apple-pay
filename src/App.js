@@ -4,7 +4,7 @@ import './App.css';
 import braintree from 'braintree-web';
 
 const App = () => {
-  const [message, setMessage] = useState('test');
+  const [message, setMessage] = useState('testing apple');
   const [applePay, setApplePay] = useState(null);
 
   /*if(!window.ApplePaySession)
@@ -127,7 +127,7 @@ const App = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <button className="apple-pay-button" onClick={handleClick}></button>
-        {message}x
+        {message}
       </header>
     </div>
   );
