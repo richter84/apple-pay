@@ -100,8 +100,9 @@ const App = () => {
           // Send payload.nonce to your server
           console.log('payload:', payload);
           console.log('event:', event);
+          alert(paymentRequest.cardholderName);
 
-          sendToServer(payload.nonce, paymentRequest.cardholderName);
+          //sendToServer(payload.nonce, paymentRequest.cardholderName);
 
           // If requested, address information is accessible in event.payment
           // and may also be sent to your server.
