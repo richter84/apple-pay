@@ -104,7 +104,9 @@ const App = () => {
           //paymentRequest.requiredBillingContactFields['name'] - undefined
           //paymentRequest.requiredBillingContactFields - postalAddress
           //paymentRequest.countryCode - US
-          alert(paymentRequest.requiredBillingContactFields['postalAddress'] + " " + paymentRequest);
+          //paymentRequest.requiredBillingContactFields['postalAddress'] - undefined
+
+          setMessage(paymentRequest);
 
           //sendToServer(payload.nonce, paymentRequest.cardholderName);
 
@@ -114,7 +116,7 @@ const App = () => {
 
           // After you have transacted with the payload.nonce,
           // call 'completePayment' to dismiss the Apple Pay sheet.
-          session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
+          //session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
         })
         .catch((tokenizeErr) => {
           console.error(tokenizeErr);
