@@ -45,7 +45,7 @@ const App = () => {
 
   const sendToServer = async (paymentNonce) => {
     setMessage('sendToServer : ' + JSON.stringify(paymentNonce));
-    const response = await fetch('https://evuf6f5uo1.execute-api.eu-west-1.amazonaws.com/dev/apple', {
+    const response = await fetch('https://4geb9ts3p3.execute-api.eu-west-1.amazonaws.com/dev/apple', {
       method: 'POST',
       body: JSON.stringify({ nonce: paymentNonce }),
       headers: {
@@ -63,7 +63,7 @@ const App = () => {
       currencyCode: 'GBP',
       total: {
         label: 'ppl',
-        amount: '0.03',
+        amount: '0.01',
       },
       requiredBillingContactFields: ['postalAddress']
     });
