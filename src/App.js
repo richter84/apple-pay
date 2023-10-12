@@ -106,9 +106,9 @@ const App = () => {
           //paymentRequest.countryCode - US
           //paymentRequest.requiredBillingContactFields['postalAddress'] - undefined
 
-          setMessage(event.payment.billingContact.postalCode);
+          //setMessage(event.payment.billingContact.postalCode);
 
-          //sendToServer(payload.nonce, paymentRequest.cardholderName);
+          sendToServer(payload.nonce, event.payment.billingContact.postalCode);
 
           // If requested, address information is accessible in event.payment
           // and may also be sent to your server.
@@ -116,7 +116,7 @@ const App = () => {
 
           // After you have transacted with the payload.nonce,
           // call 'completePayment' to dismiss the Apple Pay sheet.
-          //session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
+          session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
         })
         .catch((tokenizeErr) => {
           console.error(tokenizeErr);
