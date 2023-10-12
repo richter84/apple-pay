@@ -106,7 +106,7 @@ const App = () => {
           //paymentRequest.countryCode - US
           //paymentRequest.requiredBillingContactFields['postalAddress'] - undefined
 
-          setMessage(paymentRequest);
+          setMessage(event.payment.billingContact.postalCode);
 
           //sendToServer(payload.nonce, paymentRequest.cardholderName);
 
