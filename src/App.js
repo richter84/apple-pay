@@ -107,8 +107,8 @@ const App = () => {
           //paymentRequest.requiredBillingContactFields['postalAddress'] - undefined
 
           //setMessage(event.payment.billingContact.postalCode);
-
-          sendToServer(payload.nonce, event.payment.billingContact.postalCode);
+          alert(event.payment.billingContact.name);
+          //sendToServer(payload.nonce, event.payment.billingContact.name);
 
           // If requested, address information is accessible in event.payment
           // and may also be sent to your server.
