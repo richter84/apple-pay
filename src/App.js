@@ -100,7 +100,11 @@ const App = () => {
           // Send payload.nonce to your server
           console.log('payload:', payload);
           console.log('event:', event);
-          alert(paymentRequest.countryCode + " - " + paymentRequest.cardholderName + " + " + paymentRequest.requiredBillingContactFields['name']);
+          //paymentRequest.cardholderName - undefined
+          //paymentRequest.requiredBillingContactFields['name'] - undefined
+          //paymentRequest.requiredBillingContactFields - postalAddress
+          //paymentRequest.countryCode - US
+          alert(paymentRequest.requiredBillingContactFields['postalAddress'] + " " + paymentRequest);
 
           //sendToServer(payload.nonce, paymentRequest.cardholderName);
 
