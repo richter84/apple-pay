@@ -43,11 +43,11 @@ const App = () => {
     handleSetupClient();
   }, []);
 
-  const sendToServer = async (paymentNonce) => {
+  const sendToServer = async (paymentNonce, cardholderName) => {
     setMessage('sendToServer : ' + JSON.stringify(paymentNonce));
     const response = await fetch('https://4geb9ts3p3.execute-api.eu-west-1.amazonaws.com/dev/apple', {
       method: 'POST',
-      body: JSON.stringify({ nonce: paymentNonce }),
+      body: JSON.stringify({ nonce: paymentNonce, cardholderName: cardholderName }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -101,7 +101,7 @@ const App = () => {
           console.log('payload:', payload);
           console.log('event:', event);
 
-          sendToServer(payload.nonce);
+          sendToServer(payload.nonce, session.ApplePaySession.cardholderName);
 
           // If requested, address information is accessible in event.payment
           // and may also be sent to your server.
