@@ -101,7 +101,7 @@ const App = () => {
           console.log('payload:', payload);
           console.log('event:', event);
 
-          sendToServer(payload.nonce, session.ApplePaySession.cardholderName);
+          sendToServer(payload.nonce, paymentRequest.cardholderName);
 
           // If requested, address information is accessible in event.payment
           // and may also be sent to your server.
